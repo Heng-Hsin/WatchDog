@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 
 public class RuntimeExecTest1 {
 
@@ -10,6 +11,8 @@ public class RuntimeExecTest1 {
 			Runtime runTime = Runtime.getRuntime();
 			Process process = runTime.exec("notepad");
 			try {
+				String temp=ManagementFactory.getRuntimeMXBean().getName();
+				System.out.println(temp);
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
