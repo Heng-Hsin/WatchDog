@@ -24,9 +24,9 @@ import java.util.Date;
 
 
 public class Dummy_UI extends JFrame {
-
+	
+	public static String JavaPID="";
 	public static JLabel lblNewLabel_1 ;
-	public static JLabel lblNewLabel_2 ;
 	private JPanel contentPane;
 	
 	
@@ -40,8 +40,8 @@ public class Dummy_UI extends JFrame {
 				try {
 					Dummy_UI frame = new Dummy_UI();
 					frame.setVisible(true);
-					String temp=ManagementFactory.getRuntimeMXBean().getName();
-					lblNewLabel_1.setText(temp);
+					JavaPID=ManagementFactory.getRuntimeMXBean().getName();
+					lblNewLabel_1.setText(JavaPID);
 					initHeartBeat();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,23 +57,14 @@ public class Dummy_UI extends JFrame {
             		            		
             		try{		            									
             		
-            			
+            			String msg="";
             			
             		while(true){
-            			String String_time="";
-            			Thread.sleep(1000);
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                	    Date date = new Date();        	    
-                	    int int_minutes=date.getMinutes();
-                	    int int_hour=date.getHours();
-                	    int int_month=date.getMonth();
-                	    int int_year=date.getYear();   
-                	    
-                	    String_time= String.valueOf(int_year);          
-                	    String_time=String_time+"/"+ String.valueOf(int_month); 
-                	    String_time=String_time+"/"+ String.valueOf(int_hour); 
-                	    String_time=String_time+"/"+ String.valueOf(int_minutes); 
-                	    lblNewLabel_2.setText(String_time);
+            			
+            			Thread.sleep(3000);
+            			byte[] cmd3=MessageCreator.CreateHeartBeat_Msg(JavaPID);
+            			UDPSender.Send("127.0.0.1",20000,cmd3);
+                                    	    
             		}
        	            			
 	            	}catch(Exception e){
@@ -136,10 +127,5 @@ public class Dummy_UI extends JFrame {
 		lblNewLabel_1.setFont(new Font("新細明體", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(24, 117, 186, 36);
 		contentPane.add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setFont(new Font("新細明體", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(24, 10, 383, 36);
-		contentPane.add(lblNewLabel_2);
 	}
 }
