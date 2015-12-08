@@ -2,6 +2,7 @@ package WatcherPack;
 
 import java.awt.EventQueue;
 import java.io.PrintStream;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,8 +22,9 @@ public class WatchDog_UI extends JFrame {
 
 	private JPanel contentPane;
 	private PrintStream standardOut;
-	private JTextField textField;
-	private boolean Dog_switch =false;
+	private static JTextField textField;
+	public static boolean Dog_switch =false;
+	private static JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -33,6 +35,8 @@ public class WatchDog_UI extends JFrame {
 				try {
 					WatchDog_UI frame = new WatchDog_UI();
 					frame.setVisible(true);
+					Listen_process();
+					Showing_Time_process();
 					//System.out.println("Yeah!~");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +45,7 @@ public class WatchDog_UI extends JFrame {
 		});
 	}
 	
-	public void Listen_process(){
+	public static void Listen_process(){
 		Thread thread = new Thread(new Runnable() {
             @Override
             public void run() { 
@@ -53,6 +57,28 @@ public class WatchDog_UI extends JFrame {
         thread.start();
 		
 	}
+	
+	public static void Showing_Time_process(){
+		Thread thread = new Thread(new Runnable(){
+			@Override
+			public void run(){
+				
+				while(true){
+					try{
+						Date now= new java.util.Date();
+						lblNewLabel.setText(now.toString());
+						Thread.sleep(1000);
+					}catch(Exception e){
+						e.printStackTrace();
+						System.out.println("Error in Showing_Time_process");
+					}					
+				}
+			}
+		});
+		thread.start();
+		
+		}
+			
 
 	/**
 	 * Create the frame.
@@ -76,8 +102,7 @@ public class WatchDog_UI extends JFrame {
 		// keeps reference of standard output stream
         standardOut = System.out;
          
-        // re-assigns standard output stream and error output stream
-       
+        // re-assigns standard output stream and error output stream     
 		
 		final JTextArea textArea = new JTextArea();
 		PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
@@ -108,8 +133,7 @@ public class WatchDog_UI extends JFrame {
 				Thread thread = new Thread(new Runnable() {
 		            @Override
 		            public void run() { 
-		            	Dog_switch=true;
-		            	WatchDogProcess.listening(textField.getText());
+		            	Dog_switch=true;		            	
 
 		            	}
 		        });
@@ -123,9 +147,32 @@ public class WatchDog_UI extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Dog_switch=false;
+				
 			}
 		});
 		btnNewButton_1.setBounds(658, 300, 95, 29);
 		contentPane.add(btnNewButton_1);
+		
+		lblNewLabel = new JLabel("Time");
+		lblNewLabel.setBounds(386, 10, 234, 29);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnNewButton_2 = new JButton("Clear");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Thread thread = new Thread(new Runnable() {
+		            @Override
+		            public void run() { 
+		            	
+		            	textArea.setText("");
+
+		            	}
+		        });
+		        thread.start();
+				
+			}
+		});
+		btnNewButton_2.setBounds(658, 247, 95, 29);
+		contentPane.add(btnNewButton_2);
 	}
 }

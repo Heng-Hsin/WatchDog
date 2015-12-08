@@ -42,7 +42,7 @@ public class Dummy_UI extends JFrame {
 					frame.setVisible(true);
 					JavaPID=ManagementFactory.getRuntimeMXBean().getName();
 					lblNewLabel_1.setText(JavaPID);
-					initHeartBeat();
+					//einitHeartBeat();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -99,8 +99,9 @@ public class Dummy_UI extends JFrame {
 				Thread thread = new Thread(new Runnable() {
 		            @Override
 		            public void run() {
-		            		            		
-		            		try{		            									
+		            			
+		            		try{		        
+		            			initHeartBeat();          
 		            			int counter=0;
 		            		while(true){
 		            			String counter_str=String.valueOf(counter);
