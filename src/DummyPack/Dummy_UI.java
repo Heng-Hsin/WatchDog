@@ -27,8 +27,9 @@ public class Dummy_UI extends JFrame {
 	
 	public static String JavaPID="";
 	public static JLabel lblNewLabel_1 ;
+	public static JLabel lblNewLabel;
 	private JPanel contentPane;
-	
+	private static boolean HeartbeatSwitch=false;
 	
 
 	/**
@@ -42,7 +43,7 @@ public class Dummy_UI extends JFrame {
 					frame.setVisible(true);
 					JavaPID=ManagementFactory.getRuntimeMXBean().getName();
 					lblNewLabel_1.setText(JavaPID);
-					//einitHeartBeat();
+					initHeartBeat();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,13 +59,19 @@ public class Dummy_UI extends JFrame {
             		try{		            									
             		
             			String msg="";
-            			
+            			int counter=0;
             		while(true){
             			
             			Thread.sleep(3000);
-            			byte[] cmd3=MessageCreator.CreateHeartBeat_Msg(JavaPID);
-            			UDPSender.Send("127.0.0.1",20000,cmd3);
-                                    	    
+            			
+            			if(HeartbeatSwitch){
+            				byte[] cmd3=MessageCreator.CreateHeartBeat_Msg(JavaPID);
+                			UDPSender.Send("127.0.0.1",20000,cmd3);
+                			String counter_str=String.valueOf(counter);
+                			lblNewLabel.setText(counter_str);
+                			counter++;
+            			}
+            			
             		}
        	            			
 	            	}catch(Exception e){
@@ -88,7 +95,7 @@ public class Dummy_UI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("0");
+		 lblNewLabel = new JLabel("0");
 		lblNewLabel.setFont(new Font("新細明體", Font.PLAIN, 17));
 		lblNewLabel.setBounds(24, 57, 110, 36);
 		contentPane.add(lblNewLabel);
@@ -101,18 +108,11 @@ public class Dummy_UI extends JFrame {
 		            public void run() {
 		            			
 		            		try{		        
-		            			initHeartBeat();          
-		            			int counter=0;
-		            		while(true){
-		            			String counter_str=String.valueOf(counter);
-		            			lblNewLabel.setText(counter_str);
-		            			counter++;
-		            			Thread.sleep(1000);
-		            		}
+		            			HeartbeatSwitch=true;
 		       	            			
 			            	}catch(Exception e){
 			            		e.printStackTrace();
-			            		System.out.println("Error in Dummy Counter ");			            				            		
+			            		System.out.println("Error in Start button ");			            				            		
 			            	}
 		            	
 		            }
@@ -121,12 +121,35 @@ public class Dummy_UI extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(156, 162, 110, 28);
+		btnNewButton.setBounds(52, 163, 110, 28);
 		contentPane.add(btnNewButton);
 		
 		lblNewLabel_1 = new JLabel("PID");
 		lblNewLabel_1.setFont(new Font("新細明體", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(24, 117, 186, 36);
 		contentPane.add(lblNewLabel_1);
+		
+		JButton btnNewButton_1 = new JButton("Stop");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Thread thread = new Thread(new Runnable() {
+		            @Override
+		            public void run() {
+		            			
+		            		try{		        
+		            			HeartbeatSwitch=false;
+		       	            			
+			            	}catch(Exception e){
+			            		e.printStackTrace();
+			            		System.out.println("Error in Stop button ");			            				            		
+			            	}
+		            	
+		            }
+		        });
+		        thread.start();
+			}
+		});
+		btnNewButton_1.setBounds(217, 163, 119, 28);
+		contentPane.add(btnNewButton_1);
 	}
 }

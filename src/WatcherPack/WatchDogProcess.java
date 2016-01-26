@@ -63,10 +63,22 @@ public class WatchDogProcess {
             				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             			    Date date = new Date();
             			    String time=dateFormat.format(date);
-            		    		   	
-            			   if( TimeDateInterval_Seconds(date,ProcessPulse.pulse,30)){
+            			    
+            			    int intValue = Integer.valueOf(WatchDog_UI.textField_1.getText());
+            			    
+            			    
+            			   if( TimeDateInterval_Seconds(date,ProcessPulse.pulse,intValue) ){
             				   
-            				   System.out.println(" Boom!! ");
+            				   System.out.println(" Boom!! "+ProcessPulse.Subject);
+            				   int killid=Integer.valueOf(ProcessPulse.Subject);
+            				   String cmd = "taskkill /F /PID " + killid;
+            				   Runtime.getRuntime().exec(cmd);
+            				   Thread.sleep(3000);
+            				   
+            				   cmd = "java -jar C:\\Users\\Ted\\Desktop\\Tainan\\Dummy_UI.jar";
+            				   Runtime.getRuntime().exec(cmd);
+            				   Thread.sleep(10000);
+            				   
             			   }
             			                 		
             				 HeartBeat LastPulse=ProcessPulse;

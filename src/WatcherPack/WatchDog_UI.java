@@ -25,6 +25,9 @@ public class WatchDog_UI extends JFrame {
 	private static JTextField textField;
 	public static boolean Dog_switch =false;
 	private static JLabel lblNewLabel;
+	public static JTextField textField_1;
+	private JTextField txtCusersteddesktoptainan;
+	
 
 	/**
 	 * Launch the application.
@@ -123,6 +126,26 @@ public class WatchDog_UI extends JFrame {
 		textField.setColumns(10);
 		textField.setText("20000");
 		
+		JLabel lblNewLabel_1 = new JLabel("Dead Beat Threshold :");
+		lblNewLabel_1.setBounds(10, 53, 141, 15);
+		panel.add(lblNewLabel_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(144, 50, 96, 21);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+		textField_1.setText("20");
+		
+		JLabel lblNewLabel_2 = new JLabel("Program Path :");
+		lblNewLabel_2.setBounds(10, 88, 102, 15);
+		panel.add(lblNewLabel_2);
+		
+		txtCusersteddesktoptainan = new JTextField();
+		txtCusersteddesktoptainan.setText("C:\\Users\\Ted\\Desktop\\Tainan\\WatchDog_UI.jar");
+		txtCusersteddesktoptainan.setBounds(111, 85, 362, 21);
+		panel.add(txtCusersteddesktoptainan);
+		txtCusersteddesktoptainan.setColumns(10);
+		
 		 System.setOut(printStream);
 	     System.setErr(printStream);
 		
@@ -146,8 +169,7 @@ public class WatchDog_UI extends JFrame {
 		JButton btnNewButton_1 = new JButton("Stop");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Dog_switch=false;
-				
+				Dog_switch=false;				
 			}
 		});
 		btnNewButton_1.setBounds(658, 300, 95, 29);
