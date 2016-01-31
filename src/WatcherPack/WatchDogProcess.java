@@ -75,7 +75,7 @@ public class WatchDogProcess {
             				   Runtime.getRuntime().exec(cmd);
             				   Thread.sleep(3000);
             				   
-            				   cmd = "java -jar C:\\Users\\Ted\\Desktop\\Tainan\\Dummy_UI.jar";
+            				   cmd = "java -jar "+WatchDog_UI.txtCusersteddesktoptainan.getText();
             				   Runtime.getRuntime().exec(cmd);
             				   Thread.sleep(10000);
             				   

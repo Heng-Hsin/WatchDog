@@ -26,7 +26,7 @@ public class WatchDog_UI extends JFrame {
 	public static boolean Dog_switch =false;
 	private static JLabel lblNewLabel;
 	public static JTextField textField_1;
-	private JTextField txtCusersteddesktoptainan;
+	public static JTextField txtCusersteddesktoptainan;
 	
 
 	/**
