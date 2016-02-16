@@ -30,6 +30,7 @@ public class WatchDog_UI extends JFrame {
 	public static JTextField textField_1;
 	public static JTextField txtCusersteddesktoptainan;
 	private static Preferences prefs;
+	public static Date Systemstart;
 	
 
 	/**
@@ -39,12 +40,17 @@ public class WatchDog_UI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Systemstart = new Date();
 					WatchDog_UI frame = new WatchDog_UI();
 					frame.setVisible(true);
 					Listen_process();
 					Showing_Time_process();
-					System.out.println(System.getProperty("user.dir")); //pretty useful it can show the location  of the jar file
+					System.out.println(System.getProperty("user.dir")); // Shows the location of the running application
+					System.out.println(System.getProperty("os.name"));  // Shows the os Type ... win 7 , linux
 					
+					
+					System.getProperties().list(System.out);
+					 
 					//System.out.println("Yeah!~");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -226,6 +232,15 @@ public class WatchDog_UI extends JFrame {
 		});
 		btnNewButton_3.setBounds(497, 145, 111, 47);
 		panel.add(btnNewButton_3);
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Info", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel(" WatchDog Start Time : ");
+		lblNewLabel_3.setBounds(10, 10, 409, 27);
+		panel_1.add(lblNewLabel_3);
+		lblNewLabel_3.setText(" WatchDog Start Time : "+Systemstart);
 		
 		 System.setOut(printStream);
 	     System.setErr(printStream);
