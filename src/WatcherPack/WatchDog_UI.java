@@ -3,9 +3,11 @@ package WatcherPack;
 import java.awt.EventQueue;
 import java.io.PrintStream;
 import java.util.Date;
+import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -27,6 +29,7 @@ public class WatchDog_UI extends JFrame {
 	private static JLabel lblNewLabel;
 	public static JTextField textField_1;
 	public static JTextField txtCusersteddesktoptainan;
+	private static Preferences prefs;
 	
 
 	/**
@@ -40,6 +43,8 @@ public class WatchDog_UI extends JFrame {
 					frame.setVisible(true);
 					Listen_process();
 					Showing_Time_process();
+					System.out.println(System.getProperty("user.dir")); //pretty useful it can show the location  of the jar file
+					
 					//System.out.println("Yeah!~");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,6 +86,73 @@ public class WatchDog_UI extends JFrame {
 		thread.start();
 		
 		}
+	
+	  public void setPreference() {
+		  // Peference API
+		  
+		  // This will define a node in which the preferences can be stored
+		    prefs = Preferences.userRoot().node(this.getClass().getName());
+		    String ID1 = "Test1";
+		    String ID2 = "Test2";
+		    String ID3 = "Test3";
+
+		    // First we will get the values
+		    // Define a boolean value
+		    System.out.println(prefs.getBoolean(ID1, true));
+		    // Define a string with default "Hello World
+		    System.out.println(prefs.get(ID2, "Test message"));
+		    // Define a integer with default 50
+		    System.out.println(prefs.getInt(ID3, 50));
+
+		    // now set the values
+		    prefs.putBoolean(ID1, false);
+		    prefs.put(ID2, "Hello Europa");
+		    prefs.putInt(ID3, 45);
+		    
+		    prefs.put("testPATH","C:\\Users\\Ted\\Desktop\\Tainan\\WatchDog_UI.jar" );
+
+		    // Delete the preference settings for the first value
+		    prefs.remove(ID1);
+
+	  }
+	  
+	  public void SavePreference() {
+		  try{
+			  prefs = Preferences.userRoot().node(this.getClass().getName());
+			  System.out.println(prefs.get("testPATH", "Test message"));
+			  prefs.remove("testPATH");
+			  String savePref="";
+			  savePref=txtCusersteddesktoptainan.getText();
+			  prefs.put("testPATH",savePref );
+			  prefs.flush();
+			  JFrame frame= new JFrame();
+              JOptionPane.showMessageDialog(frame," Preference Saved ");
+			  
+		  }catch(Exception dd){
+			  dd.printStackTrace();
+				System.out.println("Error in SavePreference");
+				JFrame frame= new JFrame();
+                JOptionPane.showMessageDialog(frame," Failed to save Preference");
+		  }
+		  
+	  }
+	  
+	  public void GetPreference() {
+		  
+		  try{
+			  prefs = Preferences.userRoot().node(this.getClass().getName());
+			  
+			  String savePref="";
+			  prefs.get("testPATH", savePref);
+			  txtCusersteddesktoptainan.setText(savePref);  
+			  
+		  }catch(Exception dd){
+			  dd.printStackTrace();
+				System.out.println("Error in GetPreference");
+				
+		  }
+		  
+	  }
 			
 
 	/**
@@ -145,6 +217,15 @@ public class WatchDog_UI extends JFrame {
 		txtCusersteddesktoptainan.setBounds(111, 85, 362, 21);
 		panel.add(txtCusersteddesktoptainan);
 		txtCusersteddesktoptainan.setColumns(10);
+		
+		JButton btnNewButton_3 = new JButton("Save");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SavePreference();
+			}
+		});
+		btnNewButton_3.setBounds(497, 145, 111, 47);
+		panel.add(btnNewButton_3);
 		
 		 System.setOut(printStream);
 	     System.setErr(printStream);
