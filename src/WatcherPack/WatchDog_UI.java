@@ -2,6 +2,7 @@ package WatcherPack;
 
 import java.awt.EventQueue;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.prefs.Preferences;
 
@@ -31,6 +32,7 @@ public class WatchDog_UI extends JFrame {
 	public static JTextField txtCusersteddesktoptainan;
 	private static Preferences prefs;
 	public static Date Systemstart;
+	public static ArrayList SystemData;
 	
 
 	/**
@@ -241,6 +243,10 @@ public class WatchDog_UI extends JFrame {
 		lblNewLabel_3.setBounds(10, 10, 409, 27);
 		panel_1.add(lblNewLabel_3);
 		lblNewLabel_3.setText(" WatchDog Start Time : "+Systemstart);
+		
+		JLabel lblNewLabel_4 = new JLabel("OS Type :");
+		lblNewLabel_4.setBounds(10, 47, 209, 27);
+		panel_1.add(lblNewLabel_4);
 		
 		 System.setOut(printStream);
 	     System.setErr(printStream);
